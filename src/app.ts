@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import { productRouter } from './app/modules/Products/product.route';
+import { checkoutRouter } from './app/modules/Checkout/checkout.route';
 
 const app: Application = express();
 
@@ -12,7 +13,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // routes
-app.use('/api/products', productRouter);
+app.use('/api', productRouter);
+app.use('/api', checkoutRouter);
 
 const getAController = (req: Request, res: Response) => {
   res.send('server is Running...');

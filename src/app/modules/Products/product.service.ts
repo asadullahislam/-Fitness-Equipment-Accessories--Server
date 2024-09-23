@@ -12,7 +12,7 @@ const findProductById = async (id: string) => {
 };
 
 const findAllProducts = async () => {
-  const result = await productModel.find({ isDeleted: false });
+  const result = await productModel.find();
   return result;
 };
 
@@ -25,7 +25,7 @@ const updateProductById = async (
 };
 
 const deleteProductById = async (id: string) => {
-  const result = await productModel.findByIdAndUpdate(id, { isDeleted: true });
+  const result = await productModel.findByIdAndDelete(id);
   return result;
 };
 

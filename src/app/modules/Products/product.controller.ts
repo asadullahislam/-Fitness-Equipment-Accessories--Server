@@ -5,6 +5,29 @@ import {
   TProductRequestBody,
 } from './product.interface';
 
+const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const product = await productService.findAllProducts();
+    if (product.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'No Data Found',
+        data: [],
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: 'Product retrieved successfully',
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error retrieving products',
+      error,
+    });
+  }
+};
 const createProduct = async (req: Request, res: Response) => {
   const productData = req.body;
 
@@ -39,30 +62,6 @@ const createProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: 'Error adding product',
-      error,
-    });
-  }
-};
-
-const getAllProducts = async (req: Request, res: Response) => {
-  try {
-    const product = await productService.findAllProducts();
-    if (product.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: 'No Data Found',
-        data: [],
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      message: 'Product retrieved successfully',
-      data: product,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Error retrieving products',
       error,
     });
   }
@@ -135,7 +134,7 @@ const updateProduct = async (req: TUpdateProductRequest, res: Response) => {
         description: updateData.description || product.description,
         quantity: updateData.quantity || product.quantity,
         image: updateData.image || product.image,
-        isDeleted: product.isDeleted,
+        // isDeleted: product.isDeleted,
       },
     });
   } catch (error) {
@@ -178,7 +177,7 @@ const deleteProduct = async (req: TDeleteProductRequest, res: Response) => {
         description: product.description,
         image: product.image,
         quantity: product.quantity,
-        isDeleted: true,
+        // isDeleted: true,
       },
     });
   } catch (error) {
