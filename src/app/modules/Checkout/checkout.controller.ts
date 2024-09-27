@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import productModel from '../Products/product.model';
 
 const createOrder = async (req: Request, res: Response) => {
@@ -64,7 +65,7 @@ const createOrder = async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       message: 'Error creating order',
-      error: error.message,
+      error: error,
     });
   }
 };
